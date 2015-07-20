@@ -135,7 +135,7 @@ smoketest() {
 }
 
 
-deploy_images
+deploy_image
 
 case $1 in
     single) deploy_single ;;
