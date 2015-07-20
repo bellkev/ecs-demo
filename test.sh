@@ -78,7 +78,7 @@ deploy_single() {
         echo "$run_response"
         return 1
     fi
-    for attempt in {1..10}; do
+    for attempt in {1..30}; do
         describe_response=$(aws ecs describe-tasks --cluster circle-ecs --tasks $task)
         if instance=$(echo "$describe_response" | $JQ '.tasks[0].containerInstanceArn') \
                 && host_port=$(echo "$describe_response" | $JQ '.tasks[0].containers | .[] | select(.name=="nginx") | .networkBindings[0].hostPort') \
@@ -89,7 +89,7 @@ deploy_single() {
             return 0
         fi
         echo "Waiting for container to start..."
-        sleep 2
+        sleep 5
     done
     echo "Container failed to become ready."
     return 1
