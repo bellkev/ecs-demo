@@ -10,7 +10,8 @@ dependencies:
     - docker build --rm=false -t bellkev/ecs-demo:$CIRCLE_SHA1 . | cat
     - docker pull bellkev/nginx-base:stable | cat
 test:
-  post:
+  override:
+    - nosetests
     - docker run --name uwsgi bellkev/ecs-demo:$CIRCLE_SHA1:
         background: true
     - docker run --name nginx -p 8000:8000 --link uwsgi:uwsgi bellkev/nginx-base:stable:
