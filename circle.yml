@@ -17,4 +17,4 @@ test:
         background: true
     - sleep 3
     - curl http://localhost:8000 | grep "Hello"
-    - ./test.sh cluster
+    - ./test.sh single
