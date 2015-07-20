@@ -8,6 +8,7 @@ dependencies:
     - curl -L -o ~/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5rc1/jq-linux-x86_64-static && chmod +x ~/bin/jq
     - pip install --upgrade awscli
     - docker build --rm=false -t bellkev/ecs-demo:$CIRCLE_SHA1 . | cat
+    - docker pull bellkev/nginx-base:stable | cat
 test:
   post:
     - docker run --name uwsgi bellkev/ecs-demo:$CIRCLE_SHA1:
