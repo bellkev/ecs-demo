@@ -1,10 +1,10 @@
 machine:
   python:
     version: 2.7.9
+  services:
+    - docker
 dependencies:
   post:
-    - sudo curl -L -o /usr/bin/docker 'https://s3-external-1.amazonaws.com/circle-downloads/docker-1.7.1-circleci'; sudo chmod 0755 /usr/bin/docker; true
-    - sudo service docker start
     - curl -L -o ~/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5rc1/jq-linux-x86_64-static && chmod +x ~/bin/jq
     - pip install --upgrade awscli
     - docker build --rm=false -t bellkev/ecs-demo:$CIRCLE_SHA1 . | cat
