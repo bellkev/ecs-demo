@@ -1,0 +1,19 @@
+machine:
+  python:
+    version: 2.7.9
+  services:
+    - docker
+dependencies:
+  post:
+    - curl -L -o ~/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5rc1/jq-linux-x86_64-static && chmod +x ~/bin/jq
+    - pip install --upgrade awscli
+    - docker build --rm=false -t bellkev/ecs-demo:$CIRCLE_SHA1 .
+test:
+  post:
+    - docker run --name uwsgi bellkev/ecs-demo:$CIRCLE_SHA1:
+        background: true
+    - docker run --name nginx -p 8000:8000 --link uwsgi:uwsgi bellkev/nginx-base:stable:
+        background: true
+    - sleep 3
+    - curl http://localhost:8000 | grep "Hello"
+    - ./test.sh cluster
