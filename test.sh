@@ -88,6 +88,8 @@ deploy_single() {
             echo "Container URL: $test_url"
             return 0
         fi
+        echo "Waiting for container to start..."
+        sleep 2
     done
     echo "Container failed to become ready."
     return 1
