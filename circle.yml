@@ -1,4 +1,6 @@
 machine:
+  environment:
+    PATH: "$PATH:~/$CIRCLE_PROJECT_REPONAME/bin"
   python:
     version: 2.7.9
   services:
@@ -18,4 +20,5 @@ test:
         background: true
     - sleep 3
     - curl http://$DOCKER_IP:8000 | grep "Hello"
-    - ./test.sh single
+    - do-if-commit-tag ondemand ./test.sh single
+    - do-exclusively --tag staging ./test.sh cluster
