@@ -1,4 +1,6 @@
 machine:
+  environment:
+    PATH: "$PATH:~/$CIRCLE_PROJECT_REPONAME/bin"
   python:
     version: 2.7.9
   services:
